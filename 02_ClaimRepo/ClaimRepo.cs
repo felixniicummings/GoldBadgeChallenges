@@ -44,7 +44,6 @@ namespace _02_ClaimRepo
             {
                 return false;
             }
-
         }
 
         //Helper Method
