@@ -10,6 +10,11 @@ namespace _02_ClaimConsole
     {
         static void Main(string[] args)
         {
+            //Method
+            ProgramUI program = new ProgramUI();
+            program.Run();
         }
+
+        // Menue
     }
 }
