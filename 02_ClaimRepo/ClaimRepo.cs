@@ -8,48 +8,44 @@ namespace _02_ClaimRepo
 {
     public class ClaimRepo
     {
-        private List<Claim> _listOfClaims = new List<Claim>();
+        private Queue<Claim> _claims = new Queue<Claim>();
         //Create Claim
         public void AddItemToList(Claim item)
         {
-            _listOfClaims.Add(item);
+            _claims.Enqueue(item);
         }
 
         //Read
-        public List<Claim> GetClaimItems()
+        public Claim GetClaimById(int itemnumber)
         {
-            return _listOfClaims;
+            foreach (Claim item in _claims)
+            {
+                if (item.ClaimID == itemnumber)
+                {
+                    return item;
+                }
+            }
+
+            return null;
         }
 
-        //Update
+        public Queue<Claim> GetClaims()
+        {
+            return _claims;
+        }
 
         //Delete
-        public bool RemoveItemFromList(int itemnumber)
+        public bool RemoveItemFromTopOfQueue()
         {
-            Claim item = GetClaimByIdNumber(itemnumber);
-
-            if (item == null)
-            {
-                return false;
-            }
-
-            int initialCount = _listOfClaims.Count;
-            _listOfClaims.Remove(item);
-
-            if (initialCount > _listOfClaims.Count)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            int initialCount = _claims.Count;
+            _claims.Dequeue();
+            return initialCount > _claims.Count;
         }
 
-        //Helper Method
+        //Helper Method - Not Used
         public Claim GetClaimByIdNumber(int itemnumber)
         {
-            foreach (Claim item in _listOfClaims)
+            foreach (Claim item in _claims)
             {
                 if (item.ClaimID == itemnumber)
                 {

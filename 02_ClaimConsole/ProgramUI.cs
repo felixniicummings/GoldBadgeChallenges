@@ -25,11 +25,10 @@ namespace _02_ClaimConsole
             {
                 //Display our options to the user
                 Console.WriteLine("Please select an option to continue.\n" +
-                    "1. Add a New Claim\n" +
-                    "2. View Claims\n" +
+                    "1. View Claims\n" +
+                    "2. Take care of next claim\n" +
                     "3. View Claim\n" +
-                    "4. Delete Claim\n" +
-                    "5. Exit");
+                    "4. Exit");
                 //Get the use's input
                 string input = Console.ReadLine();
 
@@ -37,19 +36,19 @@ namespace _02_ClaimConsole
                 switch (input)
                 {
                     case "1":
-                        //Create new MenuItem
-                        CreateNewClaim();
-                        break;
-                    case "2":
-                        //View all MenuItems
+                        //View all Claims
                         DisplayAllClaims();
                         break;
-                    //case "3":
-                        // View Content By ID
-                        //DisplayClaimById();
-                        //break;
+                    case "2":
+                        //View Next Claim
+                        DisplayNextClaim();
+                        break;
+                    case "3":
+                        //Add New Claim
+                        CreateNewClaim();
+                        break;
                     case "4":
-                        // Delete Existing MenuItem 
+                        // Delete Existing Claim 
                         DeleteExistingClaim();
                         break;
                     case "5":
@@ -92,9 +91,6 @@ namespace _02_ClaimConsole
             Console.WriteLine("Enter Claim Description");
             newItem.Description = Console.ReadLine();
 
-            //List of ingredients
-            //Console.WriteLine("Enter Description for the Menu Item");
-
             //Claim Amount
             Console.WriteLine("Enter the Amount ");
             //string priceString = Console.ReadLine();
@@ -109,45 +105,39 @@ namespace _02_ClaimConsole
             newItem.DateOfClaim = DateTime.Parse(Console.ReadLine());
 
             //IsValid
-            Console.WriteLine("Enter Date of Incident ");
-            newItem.IsValid = true;
+            //Console.WriteLine("Enter Date of Incident ");
+            //newItem.IsValid = newItem.IsValid;
+            if (newItem.IsValid)
+            {
+                //return "Valid";
+                Console.WriteLine("Valid Claim.");
+            }
+            else
+            {
+                //return false;
+                Console.WriteLine("Invalid Claim.");
+            }
 
             _claimRepo.AddItemToList(newItem);
         }
 
-        
         //View all Claims    
-        /*public void DisplayAllClaims()
+        public void DisplayAllClaims()
         {
             Console.Clear();
-            List<Claim> listOfClaim = _menuItemRepo.
+            Queue<Claim> claims = _claimRepo.GetClaims();
 
-            foreach (MenuItem item in listOfMenuItems)
-            {
-                Console.WriteLine($"#{item.MenuItemNumber} {item.Name}\n, Description: {item.Description}\n, Price: ${item.Price}");
-                //Console.WriteLine($"#:{item.MenuItemNumber}\n, Name: {item.Name}\n, Description: {item.Description}\n, Price: {item.Price}");
-            }
-        }*/
+            Console.WriteLine(String.Format("{0,-8} {1,-6} {2,-25} {3,-8} {4,-15} {5,-15} {6,-8}\n", "ClaimID", "Type", "Description", "Amount", "DateOfAccident", "DateOfClaim", "IsValid"));
 
-        //Delelete Existing Claim
-        public void DeleteExistingClaim()
-        {
-            DisplayAllMenuItems();
-            //Get the Menu Item 
-            Console.WriteLine("\nPlease Enter the Number of the Menu Item you want to delete");
-            string itemInputstring = Console.ReadLine();
-            int itemToRemove = int.Parse(itemInputstring);
-            bool wasDeleted = _menuItemRepo.RemoveItemFromList(itemToRemove);
+            //Console.WriteLine("ClaimID", "Type", "Description", "Amount", "DateOfIncident", "DateOfClaim", "IsValid");
 
-            //Confirm Deletion
-            if (wasDeleted)
+            foreach (Claim item in claims)
             {
-                Console.WriteLine("Menu Item was deleted.");
-            }
-            else
-            {
-                Console.WriteLine("Menu Item could NOT be deleted.");
+                //Console.WriteLine($"#{item.ClaimID} {item.TypeOfClaim}, Description: {item.Description}, Amount: ${item.ClaimAmount} DateOfAccident: {item.DateOfIncident} DateofClaim: {item.DateOfClaim} IsValid: {item.IsValid}");
+                //Console.WriteLine(, item.TypeOfClaim, item.Description, item.ClaimAmount, item.DateOfIncident, item.DateOfClaim, item.DateOfClaim, item.IsValid);
+                Console.WriteLine(String.Format("{0,-8} {1,-6} {2,-25} {3,-8} {4,-15} {5,-15} {6,-8}", item.ClaimID, item.TypeOfClaim, item.Description, item.ClaimAmount, item.DateOfIncident.ToShortDateString(), item.DateOfClaim.ToShortDateString(), item.IsValid));
             }
         }
+
     }
 }

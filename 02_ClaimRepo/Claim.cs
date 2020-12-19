@@ -21,11 +21,15 @@ namespace _02_ClaimRepo
         public Double ClaimAmount { get; set; }
         public DateTime DateOfIncident { get; set; }
         public DateTime DateOfClaim { get; set; }
-        public bool IsValid { get; set; }
+        private int ValidPeriod = 30;
+        //public bool IsValid { get; set; }
+
+        // change IsValid get to return DateOfIncident - DateOfClaim < ValidPeriod
+        public bool IsValid { get { return (DateOfClaim - DateOfIncident).TotalDays < ValidPeriod; } }
 
         public Claim() { }
 
-        public Claim(int claimid, ClaimType typeofclaim, string description, Double claimamount, DateTime dateofincident, DateTime dateofclaim, bool isvalid)
+        public Claim(int claimid, ClaimType typeofclaim, string description, Double claimamount, DateTime dateofincident, DateTime dateofclaim) //bool isvalid)
         {
             ClaimID = claimid;
             TypeOfClaim = typeofclaim;
@@ -33,7 +37,7 @@ namespace _02_ClaimRepo
             ClaimAmount = claimamount;
             DateOfIncident = dateofincident;
             DateOfClaim = dateofclaim;
-            IsValid = isvalid;
+            //IsValid = isvalid;
         }
 
     }
