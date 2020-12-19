@@ -8,9 +8,9 @@ namespace _02_ClaimRepo
 {
     public class ClaimRepo
     {
-        private Queue<Claim> _claims = new Queue<Claim>();
+        public Queue<Claim> _claims = new Queue<Claim>();
         //Create Claim
-        public void AddItemToList(Claim item)
+        public void AddItem(Claim item)
         {
             _claims.Enqueue(item);
         }
@@ -42,7 +42,7 @@ namespace _02_ClaimRepo
             return initialCount > _claims.Count;
         }
 
-        //Helper Method - Not Used
+        //Helper Method
         public Claim GetClaimByIdNumber(int itemnumber)
         {
             foreach (Claim item in _claims)

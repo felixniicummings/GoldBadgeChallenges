@@ -14,6 +14,7 @@ namespace _02_ClaimConsole
         //private MenuItemRepo _menuItemRepo = new MenuItemRepo();
         public void Run()
         {
+            SeedData();
             Menu();
         }
 
@@ -27,7 +28,7 @@ namespace _02_ClaimConsole
                 Console.WriteLine("Please select an option to continue.\n" +
                     "1. View Claims\n" +
                     "2. Take care of next claim\n" +
-                    "3. View Claim\n" +
+                    "3. Add New Claim\n" +
                     "4. Exit");
                 //Get the use's input
                 string input = Console.ReadLine();
@@ -48,10 +49,6 @@ namespace _02_ClaimConsole
                         CreateNewClaim();
                         break;
                     case "4":
-                        // Delete Existing Claim 
-                        DeleteExistingClaim();
-                        break;
-                    case "5":
                         //Exit
                         Console.WriteLine("Good Bye!");
                         keepRunning = false;
@@ -76,12 +73,12 @@ namespace _02_ClaimConsole
             Console.Clear();
             
             //Claim ID Number
-            Console.WriteLine("Enter a Number for The Menu Item");
+            Console.WriteLine("Enter a Claim Number");
             string numberItemString = Console.ReadLine();
             newItem.ClaimID = int.Parse(numberItemString);
 
             //Claim Type
-            Console.WriteLine("Enter the Genre Number:\n" +
+            Console.WriteLine("Enter Claim Type:\n" +
                 "1. Car\n" +
                 "2. Home\n" +
                 "3. Theft");
@@ -97,11 +94,11 @@ namespace _02_ClaimConsole
             newItem.ClaimAmount = Double.Parse(Console.ReadLine());
 
             //Incident Date
-            Console.WriteLine("Enter Date of Incident ");
+            Console.WriteLine("Enter Date of Incident Like MM/DD/YYY");
             newItem.DateOfIncident = DateTime.Parse(Console.ReadLine());
 
             //Claim Date
-            Console.WriteLine("Enter Date of Claim ");
+            Console.WriteLine("Enter Date of Claim Like MM/DD/YYY");
             newItem.DateOfClaim = DateTime.Parse(Console.ReadLine());
 
             //IsValid
@@ -110,15 +107,15 @@ namespace _02_ClaimConsole
             if (newItem.IsValid)
             {
                 //return "Valid";
-                Console.WriteLine("Valid Claim.");
+                Console.WriteLine("Good News! Your Claim is Valid.");
             }
             else
             {
                 //return false;
-                Console.WriteLine("Invalid Claim.");
+                Console.WriteLine("Sorry! Your Claim is being filed too late and is Invalid.");
             }
 
-            _claimRepo.AddItemToList(newItem);
+            _claimRepo.AddItem(newItem);
         }
 
         //View all Claims    
@@ -133,11 +130,56 @@ namespace _02_ClaimConsole
 
             foreach (Claim item in claims)
             {
-                //Console.WriteLine($"#{item.ClaimID} {item.TypeOfClaim}, Description: {item.Description}, Amount: ${item.ClaimAmount} DateOfAccident: {item.DateOfIncident} DateofClaim: {item.DateOfClaim} IsValid: {item.IsValid}");
-                //Console.WriteLine(, item.TypeOfClaim, item.Description, item.ClaimAmount, item.DateOfIncident, item.DateOfClaim, item.DateOfClaim, item.IsValid);
                 Console.WriteLine(String.Format("{0,-8} {1,-6} {2,-25} {3,-8} {4,-15} {5,-15} {6,-8}", item.ClaimID, item.TypeOfClaim, item.Description, item.ClaimAmount, item.DateOfIncident.ToShortDateString(), item.DateOfClaim.ToShortDateString(), item.IsValid));
             }
         }
+
+        private void DisplayNextClaim()
+        {
+            Console.Clear();
+            Claim claim = _claimRepo._claims.First();
+
+            // Show claim
+            Console.WriteLine($"ClaimID: {claim.ClaimID}\n" + $"Type: {claim.TypeOfClaim}\n" + $"Description: {claim.Description}\n" + $"DateOfAccident: {claim.DateOfIncident}\n" + $"DateOfClaim: {claim.DateOfClaim}\n" + $"IsValid: {claim.IsValid}\n");
+
+            // Ask user to choose
+            Console.WriteLine("Do you want to deal with this claim now(y/n)?");
+            bool keepRunning = true;
+            while (keepRunning)
+            {
+                string input = Console.ReadLine();
+                if (input == "y")
+                {
+                    _claimRepo.RemoveItemFromTopOfQueue();
+                    keepRunning = false;
+                }
+                else if (input == "n")
+                {
+                    _claimRepo.RemoveItemFromTopOfQueue();
+                    _claimRepo.AddItem(claim);
+                    keepRunning = false;
+                }
+                else
+                {
+                    Console.WriteLine("Please enter y or n");
+                }
+            }
+        }
+
+        // Seed data
+        private void SeedData()
+        {
+            //Claim(int claimid, ClaimType typeofclaim, string description, Double claimamount, DateTime dateofincident, DateTime dateofclaim)
+
+            Claim carClaim = new Claim(1,ClaimType.Car, "Car ran of road.", 10000.00, new DateTime(2020, 7, 10), new DateTime(2020, 7, 20));
+            Claim homeClaim = new Claim(2,ClaimType.Home, "Garage door broke.", 3000.00, new DateTime(2020, 8, 20), new DateTime(2020, 9, 5));
+            Claim theftClaim = new Claim(3,ClaimType.Theft, "Missing chicken.", 20.00, new DateTime(2020, 10, 20), new DateTime(2018, 10, 25));
+
+            _claimRepo.AddItem(carClaim);
+            _claimRepo.AddItem(homeClaim);
+            _claimRepo.AddItem(theftClaim);
+        }
+
 
     }
 }

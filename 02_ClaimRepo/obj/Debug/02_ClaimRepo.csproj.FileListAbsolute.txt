@@ -1,0 +1,6 @@
+C:\ElevenFiftyProjects\GoldBadgeChallenges\02_ClaimRepo\bin\Debug\02_ClaimRepo.dll
+C:\ElevenFiftyProjects\GoldBadgeChallenges\02_ClaimRepo\bin\Debug\02_ClaimRepo.pdb
+C:\ElevenFiftyProjects\GoldBadgeChallenges\02_ClaimRepo\obj\Debug\02_ClaimRepo.csprojAssemblyReference.cache
+C:\ElevenFiftyProjects\GoldBadgeChallenges\02_ClaimRepo\obj\Debug\02_ClaimRepo.csproj.CoreCompileInputs.cache
+C:\ElevenFiftyProjects\GoldBadgeChallenges\02_ClaimRepo\obj\Debug\02_ClaimRepo.dll
+C:\ElevenFiftyProjects\GoldBadgeChallenges\02_ClaimRepo\obj\Debug\02_ClaimRepo.pdb

@@ -8,7 +8,7 @@ namespace _02_ClaimRepo
 {
     public enum ClaimType
     {
-        Car = 1,
+        Car=1,
         Home,
         Theft
     }
@@ -32,6 +32,17 @@ namespace _02_ClaimRepo
         public Claim(int claimid, ClaimType typeofclaim, string description, Double claimamount, DateTime dateofincident, DateTime dateofclaim) //bool isvalid)
         {
             ClaimID = claimid;
+            TypeOfClaim = typeofclaim;
+            Description = description;
+            ClaimAmount = claimamount;
+            DateOfIncident = dateofincident;
+            DateOfClaim = dateofclaim;
+            //IsValid = isvalid;
+        }
+
+        public Claim(ClaimType typeofclaim, string description, Double claimamount, DateTime dateofincident, DateTime dateofclaim) //bool isvalid)
+        {
+            //ClaimID = claimid;
             TypeOfClaim = typeofclaim;
             Description = description;
             ClaimAmount = claimamount;

@@ -15,6 +15,6 @@ namespace _02_ClaimConsole
             program.Run();
         }
 
-        // Menue
+        // Menu
     }
 }
